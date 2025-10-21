@@ -8,7 +8,7 @@ app.listen(3000, () => console.log("✅ Ping server running on port 3000"));
 
 // Telegram Bot setup
 const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
-const photoUrl = 'https://https://i.postimg.cc/cH8hbz39/lock-key-t1.png';
+const photoUrl = 'https://i.postimg.cc/bv1H0nf4/lock-key-trarent.png';
 
 // Handle new member joins
 bot.on('new_chat_members', async (ctx) => {
@@ -46,4 +46,5 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
+
 
