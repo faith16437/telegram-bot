@@ -16,7 +16,7 @@ bot.on('new_chat_members', async (ctx) => {
     await ctx.replyWithPhoto(
       { url: photoUrl },
       {
-        caption: '🔒 To unlock full group access, invite 5 people by clicking below:',
+        caption: '🔒 To Unlock Full Group Access✅, invite 5 people by clicking below:',
         parse_mode: 'HTML', // prevents Markdown parsing issues
         reply_markup: {
           inline_keyboard: [
@@ -59,3 +59,4 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
+
