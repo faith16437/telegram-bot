@@ -8,12 +8,7 @@ app.listen(3000, () => console.log("✅ Ping server running on port 3000"));
 
 // --- Telegram Bot setup ---
 const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
-
-// --- Handle new member joins ---
-bot.on('new_chat_members', async (ctx) => {
-  try {
-    // Send static lock.webp (transparent, not animated)
-    const stickerPath = 'locked.webp'; // static sticker file in same folder
+const stickerPath = 'locked.webp'; // static sticker file in same folder
 
     // Then send the main unlock message
     await ctx.reply(
@@ -62,3 +57,4 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
+
