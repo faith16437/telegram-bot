@@ -8,14 +8,17 @@ app.listen(3000, () => console.log("✅ Ping server running on port 3000"));
 
 // --- Telegram Bot setup ---
 const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
-const stickerPath = 'chpic.su_-_RestrictedEmoji_616-ezgif.com-gif-maker.webp'; // static locked.webp file in project root
+const stickerPath = 'locked.webp'; // static sticker file in same folder
 
 // --- Handle new member joins ---
 bot.on('new_chat_members', async (ctx) => {
   try {
-    await ctx.replyWithPhoto(
-      { source: stickerPath },
+      await ctx.replyWithSticker({ source: 'chpic.su_-_RestrictedEmoji_616-ezgif.com-gif-maker.webp' });
+
+    await ctx.reply(
+      '👋 Welcome! Share this group or open it below:',
       {
+        parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [
             [
@@ -34,10 +37,9 @@ bot.on('new_chat_members', async (ctx) => {
         }
       }
     );
-
-    console.log("👋 Sent locked image + buttons");
+  
   } catch (err) {
-    console.error("❌ Failed to send locked image/buttons:", err.message);
+    console.error("❌ Failed to send welcome message:", err.message);
   }
 });
 
@@ -58,4 +60,3 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
-
