@@ -8,35 +8,38 @@ app.listen(3000, () => console.log("✅ Ping server running on port 3000"));
 
 // --- Telegram Bot setup ---
 const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
-const photoUrl = 'https://i.postimg.cc/bv1H0nf4/lock-key-trarent.png';
 
 // --- Handle new member joins ---
 bot.on('new_chat_members', async (ctx) => {
   try {
-    await ctx.replyWithPhoto(
-      { url: photoUrl },
+    // Send animated 🔐 sticker first
+    await ctx.replyWithSticker({ source: 'AnimatedSticker.tgs' });
+
+    // Then send the unlock message
+    await ctx.reply(
+      '<b>🔐 To Unlock Full Group Access✅</b>\nInvite 5 people by clicking below:',
       {
-        caption: '🔒 To Unlock Full Group Access✅, invite 5 people by clicking below:',
-        parse_mode: 'HTML', // prevents Markdown parsing issues
+        parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [
             [
-              { 
-                text: '📤 SHARE TO OPEN [0/5]', 
-                url: 'https://t.me/share/url?url=https://t.me/starlight1_8&text=Join this group' 
+              {
+                text: '📤 SHARE TO OPEN [0/5]',
+                url: 'https://t.me/share/url?url=https://t.me/starlight1_8&text=Join this group'
               }
             ],
             [
-              { 
-                text: '🔓 OPEN GROUP', 
-                url: 'https://t.me/starlight1_8' 
+              {
+                text: '🔓 OPEN GROUP',
+                url: 'https://t.me/starlight1_8'
               }
             ]
           ]
         }
       }
     );
-    console.log("👋 Sent welcome/share message to new member");
+
+    console.log("👋 Sent sticker and unlock message to new member");
   } catch (err) {
     console.error("❌ Failed to send welcome message:", err.message);
   }
@@ -59,5 +62,3 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
-
-
