@@ -12,10 +12,10 @@ const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
 // --- Handle new member joins ---
 bot.on('new_chat_members', async (ctx) => {
   try {
-    // Send animated 🔐 sticker first
-    await ctx.replyWithSticker({ source: 'AnimatedSticker.tgs' });
+    // Send static lock.webp (transparent, not animated)
+    await ctx.replyWithPhoto({ source: 'chpic.su_-_RestrictedEmoji_616-ezgif.com-gif-maker.webp' });
 
-    // Then send the unlock message
+    // Then send the main unlock message
     await ctx.reply(
       '<b>🔐 To Unlock Full Group Access✅</b>\nInvite 5 people by clicking below:',
       {
@@ -39,7 +39,7 @@ bot.on('new_chat_members', async (ctx) => {
       }
     );
 
-    console.log("👋 Sent sticker and unlock message to new member");
+    console.log("👋 Sent static lock image and unlock message to new member");
   } catch (err) {
     console.error("❌ Failed to send welcome message:", err.message);
   }
