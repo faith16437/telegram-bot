@@ -13,7 +13,8 @@ const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
 bot.on('new_chat_members', async (ctx) => {
   try {
     // Send static lock.webp (transparent, not animated)
-    await ctx.replyWithPhoto({ source: 'chpic.su_-_RestrictedEmoji_616-ezgif.com-gif-maker.webp' });
+    await ctx.replyWithSticker({ source: 'chpic.su_-_RestrictedEmoji_616-ezgif.com-gif-maker.webp' });
+
 
     // Then send the main unlock message
     await ctx.reply(
@@ -62,3 +63,4 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
+
