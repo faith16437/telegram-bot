@@ -37,7 +37,7 @@ bot.on('new_chat_members', async (ctx) => {
         }
       }
     );
-    console.log("👋 Sent welcome + sticker to new member");
+  
   } catch (err) {
     console.error("❌ Failed to send welcome message:", err.message);
   }
