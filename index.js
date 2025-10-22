@@ -16,14 +16,6 @@ bot.on('new_chat_members', async (ctx) => {
     await ctx.replyWithSticker({ source: 'chpic.su_-_RestrictedEmoji_616-ezgif.com-gif-maker.webp' });
 
 
-    // Then send the main unlock message
-    await ctx.reply(
-      ,
-      {
-        parse_mode: 'HTML',
-        reply_markup: {
-          inline_keyboard: [
-            [
               {
                 text: '📤 SHARE TO OPEN [0/5]',
                 url: 'https://t.me/share/url?url=https://t.me/starlight1_8&text=Join this group'
@@ -63,6 +55,7 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
+
 
 
 
