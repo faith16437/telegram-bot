@@ -2,45 +2,65 @@ const { Telegraf, Markup } = require('telegraf');
 const express = require('express');
 const app = express();
 
-// Keep-alive for Railway
-app.get('/', (req, res) => res.send('Bot is live'));
-app.listen(3000, () => console.log('✅ Web server running'));
+// === Express keep-alive server (for Railway) ===
+app.get("/", (req, res) => res.send("Bot is live ✅"));
+app.listen(3000, () => console.log("✅ Keep-alive server running on port 3000"));
 
-// Telegram bot
-const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
+// === Telegram bot setup ===
+const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA'); // <--- replace with your bot token
 
+// === New member welcome ===
 bot.on('new_chat_members', async (ctx) => {
   try {
-    // 🔐 Sent separately to appear large
-    await ctx.reply('🔐');
+    const chatId = ctx.chat.id;
 
-    // Text + inline buttons
+    // 1️⃣ Send the single emoji first — Telegram may render it LARGE automatically
+    await ctx.telegram.sendMessage(chatId, '🔐'); // <-- EXACTLY this, no spaces/newlines
+
+    // 2️⃣ Small delay so the emoji message shows before the caption/buttons
+    await new Promise(r => setTimeout(r, 400));
+
+    // 3️⃣ Send the main caption + inline buttons
     await ctx.reply(
-      `To Unlock Full Group Access✅:`,
+      'To unlock full group access, invite 5 people by clicking below:',
       {
         reply_markup: Markup.inlineKeyboard([
           [
             Markup.button.url(
               '📤 SHARE TO OPEN [0/5]',
               'https://t.me/share/url?url=https://t.me/starlight1_8&text=Join this group'
-            ),
+            )
           ],
-          [Markup.button.url('🔓 OPEN GROUP', 'https://t.me/starlight1_8')],
-        ]),
+          [
+            Markup.button.url(
+              '🔓 OPEN GROUP',
+              'https://t.me/starlight1_8'
+            )
+          ]
+        ])
       }
     );
 
-    console.log('👋 Sent welcome/unlock message');
+    console.log(`👋 Sent welcome message with emoji to ${ctx.from.username || 'a new member'}`);
   } catch (err) {
-    console.error('❌ Error sending message:', err.message);
+    console.error("❌ Failed to send welcome message:", err.message);
   }
 });
 
-// Launch bot
-bot.launch().then(() => console.log('🚀 Bot launched successfully'));
+// === Launch bot ===
+bot.launch()
+  .then(() => console.log("🚀 Bot launched successfully"))
+  .catch(err => console.error("❌ Launch error:", err.message));
 
-// Keep alive logs
-setInterval(() => console.log('💓 Bot still alive'), 120000);
+// === Heartbeat log (every 2 minutes) ===
+setInterval(() => {
+  console.log("💓 Bot still alive");
+}, 2 * 60 * 1000);
 
-process.on('uncaughtException', (err) => console.error('⚠️ Uncaught exception:', err));
-process.on('unhandledRejection', (reason) => console.error('⚠️ Unhandled rejection:', reason));
+// === Error handling ===
+process.on('uncaughtException', (err) => {
+  console.error('⚠️ Uncaught exception:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('⚠️ Unhandled rejection:', reason);
+});
