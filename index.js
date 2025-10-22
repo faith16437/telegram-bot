@@ -18,7 +18,7 @@ bot.on('new_chat_members', async (ctx) => {
 
     // Then send the main unlock message
     await ctx.reply(
-      '<b>🔐 To Unlock Full Group Access✅</b>\nInvite 5 people by clicking below:',
+      '<b>🔐 To Unlock Full Group Access✅</b>',
       {
         parse_mode: 'HTML',
         reply_markup: {
@@ -63,4 +63,5 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
+
 
