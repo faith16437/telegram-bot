@@ -8,37 +8,36 @@ app.listen(3000, () => console.log("✅ Ping server running on port 3000"));
 
 // --- Telegram Bot setup ---
 const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
-const stickerPath = 'chpic.su_-_RestrictedEmoji_616-ezgif.com-gif-maker.webp'; // static sticker file in same folder
+const stickerPath = 'chpic.su_-_RestrictedEmoji_616-ezgif.com-gif-maker.webp'; // static locked.webp file in project root
 
 // --- Handle new member joins ---
 bot.on('new_chat_members', async (ctx) => {
   try {
-    // Send locked sticker first
-    await ctx.replyWithSticker({ source: stickerPath });
-
-    // Send buttons only — no text caption
-    await ctx.reply('', {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: '📤 SHARE GROUP',
-              url: 'https://t.me/share/url?url=https://t.me/starlight1_8&text=Join this group'
-            }
-          ],
-          [
-            {
-              text: '🔓 OPEN GROUP',
-              url: 'https://t.me/starlight1_8'
-            }
+    await ctx.replyWithPhoto(
+      { source: stickerPath },
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: '📤 SHARE GROUP',
+                url: 'https://t.me/share/url?url=https://t.me/starlight1_8&text=Join this group'
+              }
+            ],
+            [
+              {
+                text: '🔓 OPEN GROUP',
+                url: 'https://t.me/starlight1_8'
+              }
+            ]
           ]
-        ]
+        }
       }
-    });
+    );
 
-    console.log("👋 Sent locked sticker + buttons");
+    console.log("👋 Sent locked image + buttons");
   } catch (err) {
-    console.error("❌ Failed to send sticker/buttons:", err.message);
+    console.error("❌ Failed to send locked image/buttons:", err.message);
   }
 });
 
