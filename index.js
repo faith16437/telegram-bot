@@ -23,7 +23,7 @@ bot.on('new_chat_members', async (ctx) => {
           inline_keyboard: [
             [
               {
-                text: '📤 SHARE GROUP',
+                text: '📤 SHARE GROUP [0/5]',
                 url: 'https://t.me/share/url?url=https://t.me/starlight1_8&text=Join this group'
               }
             ],
@@ -60,3 +60,4 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason) => {
   console.error('⚠️ Unhandled rejection:', reason);
 });
+
