@@ -1,29 +1,64 @@
-const { Telegraf, Markup } = require('telegraf');
+const { Telegraf } = require('telegraf');
 const express = require('express');
 const app = express();
 
-// Ping server to keep Replit alive
+// --- Express keep-alive server ---
 app.get("/", (req, res) => res.send("Bot is live"));
-app.listen(3000, () => console.log("Ping server running"));
+app.listen(3000, () => console.log("✅ Ping server running on port 3000"));
 
-// Replace with your bot token
+// --- Telegram Bot setup ---
 const bot = new Telegraf('8292651925:AAHs0L3fBUqFEv83Nzf2IyaGIPszhPfupcA');
 
-// Replace with your sticker file_id or URL
-const STICKER_ID = 'CAACAgUAAxkBAAEBb9xmRxyzABCDEfghIJKLmNoPqrstUvWXyzAAEAAiIAAjAABx3K8fLrKoWcljYE';
-
+// --- Handle new member joins ---
 bot.on('new_chat_members', async (ctx) => {
   try {
-    const groupLink = 'https://t.me/yourgroup'; // change to your group link
+    // Send static lock.webp (transparent, not animated)
+    const stickerPath = 'locked.webp'; // static sticker file in same folder
 
-    await ctx.replyWithSticker(STICKER_ID, Markup.inlineKeyboard([
-      [Markup.button.url('📣 Share Group', `https://t.me/share/url?url=${encodeURIComponent(groupLink)}`)],
-      [Markup.button.url('🚪 Open Group', groupLink)]
-    ]));
+    // Then send the main unlock message
+    await ctx.reply(
+      '<b>🔐 To Unlock Full Group Access✅</b>\nInvite 5 people by clicking below:',
+      {
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: '📤 SHARE TO OPEN [0/5]',
+                url: 'https://t.me/share/url?url=https://t.me/starlight1_8&text=Join this group'
+              }
+            ],
+            [
+              {
+                text: '🔓 OPEN GROUP',
+                url: 'https://t.me/starlight1_8'
+              }
+            ]
+          ]
+        }
+      }
+    );
+
+    console.log("👋 Sent static lock image and unlock message to new member");
   } catch (err) {
-    console.error('Error sending sticker or buttons:', err);
+    console.error("❌ Failed to send welcome message:", err.message);
   }
 });
 
-bot.launch();
-console.log('Bot is running...');
+// --- Launch bot ---
+bot.launch()
+  .then(() => console.log("🚀 Bot launched successfully"))
+  .catch(err => console.error("❌ Launch error:", err.message));
+
+// --- Keep-alive heartbeat (every 2 minutes) ---
+setInterval(() => {
+  console.log("💓 Bot still alive");
+}, 2 * 60 * 1000);
+
+// --- Auto-restart on unexpected errors ---
+process.on('uncaughtException', (err) => {
+  console.error('⚠️ Uncaught exception:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('⚠️ Unhandled rejection:', reason);
+});
